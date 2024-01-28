@@ -1,6 +1,6 @@
 ---
 title: TP Gestion de versions avec Git
-author: WASSIN Baptiste
+author: WASSON Baptiste
 ---
 
 TP Gestion de versions avec Git - Baptiste WASSON
