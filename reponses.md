@@ -362,9 +362,27 @@ git merge fonctionnalite2
 
   - Que se passe-t-il et pourquoi ?
 
+  > Il y a un conflit dans le fichier1. Des modifications ont etaient faites dans les 2 branches
+
 - Lancer un `git status`
 
+```
+On branch master
+Your branch is ahead of 'origin/master' by 9 commits.
+  (use "git push" to publish your local commits)
+
+You have unmerged paths.
+  (fix conflicts and run "git commit")
+  (use "git merge --abort" to abort the merge)
+
+Unmerged paths:
+  (use "git add <file>..." to mark resolution)
+        both modified:   fichier1.md
+```
+
   - Que doit-on faire si on veut annuler la fusion en cours ? (**ne pas lancer la commande**)
+
+  > Il faut faire `git merge --abort`
 
 - On veut résoudre le conflit. Plusieurs possibilités :
 
