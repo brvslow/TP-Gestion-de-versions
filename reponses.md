@@ -334,13 +334,21 @@ git merge fonctionnalite1
 
 - Noter le changement dans l'onglet _Git Graph_. Que signifie la mention _Fast-forward_ indiquée par la sortie de la commande ?
 
-> Au lieu de faire une vraie fusion, git deplace la pointe de la branche actuelle vers celle de la branche cible pour intégrer les historiques
+> Au lieu de faire une vraie fusion, git deplace la pointe de la branche actuelle vers celle de la branche cible. Pour cela, il faut qu'il n'y ai pas de nouveaux commit.
 
 - On veut maintenant fusionner `fonctionnalite2` dans la branche d'intégration (`master`). Effectuer cette fusion.
 
+```
+git merge fonctionnalite2
+```
+
 - Noter le changement dans l'onglet _Git Graph_. Que signifie la mention _Merge made by the ... strategy_ indiquée par la sortie de la commande ?
 
+> la stratégie ort (Ostenably Recursive's Twin) est la stratégie de fusion par défaut. Cette stratégie est capable de prendre en compte de nombrex renommage
+
 - Quelle est la différence fondamentale avec la fusion précédente ?
+
+> TODO:
 
 - Créer une nouvelle branche `fonctionnalite3`, se déplacer dessus, et modifier le fichier `fichier1.md` en y ajoutant une ligne de texte. Committer : "Modification fichier1 pour fonctionnalité 3"
 
