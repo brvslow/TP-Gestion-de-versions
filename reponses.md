@@ -348,9 +348,16 @@ git merge fonctionnalite2
 
 - Quelle est la différence fondamentale avec la fusion précédente ?
 
-> TODO:
+> 
 
 - Créer une nouvelle branche `fonctionnalite3`, se déplacer dessus, et modifier le fichier `fichier1.md` en y ajoutant une ligne de texte. Committer : "Modification fichier1 pour fonctionnalité 3"
+
+```
+git branch fonctionnalite3
+git switch fonctionnalite3
+git add fichier1.md
+git commit -m "Modification fichier1 pour fonctionnalité 3"
+```
 
   - Comment utiliser _Git Graph_ pour qu'il nous montre les différences entre l'ancienne version de `fichier1.md` et la version courante que l'on vient de committer ?
 
@@ -358,7 +365,23 @@ git merge fonctionnalite2
 
 - Repartir sur `master`, et modifier `fichier1.md` en y ajoutant aussi une ligne (différente de celle qu'on a ajoutée sur l'autre branche) ; ajouter à l'index et _commit_
 
+```
+git switch master
+git add fichier1.md
+git commit -m "update fichier1 pour fonctionnalité 1"
+```
+
 - Tenter de fusionner la branche `fonctionnalite3` avec `master`
+
+```
+git merge fonctionnalite3
+```
+
+```
+Auto-merging fichier1.md
+CONFLICT (content): Merge conflict in fichier1.md
+Automatic merge failed; fix conflicts and then commit the result.
+```
 
   - Que se passe-t-il et pourquoi ?
 
@@ -406,6 +429,11 @@ Unmerged paths:
 
 - Ajouter les modification à l'index et committer
 
+```
+git add fichier1.md
+git commit -m "modification fichier1.md"
+```
+
 - NB : parfois, plusieurs fichiers sont en conflit ; le processus est identique, il faut juste résoudre les conflits sur tous les fichiers
 
 - NB : les conflits de fusion sont fréquents lorsqu'on travaille en collaboration (plusieurs personnes vont travailler sur le même fichier pour remplir deux fonctionnalités différentes)
@@ -421,3 +449,9 @@ Unmerged paths:
   - Tâche terminée ? => fusion dans la branche d'intégration et suppression de la branche
 
 - Supprimer les trois branches `fonctionnalitex` (attention : on ne peut pas supprimer une branche sur laquelle on est)
+
+```
+git branch -D fonctionnalite1
+git branch -D fonctionnalite2
+git branch -D fonctionnalite3
+```
