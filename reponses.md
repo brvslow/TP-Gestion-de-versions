@@ -320,11 +320,21 @@ _Cette partie est à faire sur le même dépôt que la partie précédente. C'es
 
 - Se déplacer sur la branche `master`
 
+```
+git branch master
+```
+
   - Noter le changement dans l'onglet _Git Graph_
 
 - On va maintenant intégrer la branche `fonctionnalite1`, qui est terminée, dans la branche d'intégration (ça s'appelle une _fusion_, ou un _merge_) : fusionner avec la branche `fonctionnalite1`
 
+```
+git merge fonctionnalite1
+```
+
 - Noter le changement dans l'onglet _Git Graph_. Que signifie la mention _Fast-forward_ indiquée par la sortie de la commande ?
+
+> Au lieu de faire une vraie fusion, git deplace la pointe de la branche actuelle vers celle de la branche cible pour intégrer les historiques
 
 - On veut maintenant fusionner `fonctionnalite2` dans la branche d'intégration (`master`). Effectuer cette fusion.
 
