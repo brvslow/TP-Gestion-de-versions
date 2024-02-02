@@ -354,6 +354,8 @@ git merge fonctionnalite2
 
   - Comment utiliser _Git Graph_ pour qu'il nous montre les différences entre l'ancienne version de `fichier1.md` et la version courante que l'on vient de committer ?
 
+  > il suffit de cliquer sur **Uncommited changes** et sur le fichier pour voir les changements
+
 - Repartir sur `master`, et modifier `fichier1.md` en y ajoutant aussi une ligne (différente de celle qu'on a ajoutée sur l'autre branche) ; ajouter à l'index et _commit_
 
 - Tenter de fusionner la branche `fonctionnalite3` avec `master`
