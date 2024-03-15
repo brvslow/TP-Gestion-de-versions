@@ -685,13 +685,48 @@ origin  https://github.com/brvslow/sio1-2024-java-grpb (push)
 - Supposons que l'on veuille effectivement publier sur le _remote_ une branche sur laquelle on travaille (pour sauvegarde ou pour que d'autres puissent l'utiliser)
 
   - Créer une nouvelle branche `partage`
+
+  ```
+  git branch partage
+  ```
+
   - Aller sur la branche
-  - Ajouter un fichier `partage.md`
+
+  ```
+  git switch partage
+  ```
+
+  - Ajouter un fichier `partage.md
+  
+  ```
+  touch partage.md
+  ```
+
   - L'inclure dans l'index
+  
+  ```
+  git add partage.md
+  ```
   - Faire un _commit_
+
+  ```
+  git commit -m "ajout du fichier partage.md"
+  ```
+
   - _Push_
+
+  ```git push```
+
   - Que se passe-t-il ?
+
+  > il est impossible de _push_ le fichier si la branche n'est pas _push_
+
   - Exécuter la bonne commande pour sauvegarder la branche sur le remote
+
+  ```
+  git push --set-upstream origin partage
+  ```
+
   - Vérifier sur GitHub que la branche apparaît bien
 
 - La branche `partage` n'a pas été fusionnée avant le *push* ; on va utiliser un autre moyen offert par GitHub pour fusionner une branche en *remote* : la **_Pull Request_**
@@ -717,11 +752,111 @@ origin  https://github.com/brvslow/sio1-2024-java-grpb (push)
 
   - Repartir en local pour effectuer une modification sur `partage.md` et ajouter `precision.md`
   - _Commit_ des deux modifs
+
+  ```
+  git add precision.md
+  git add partage.md
+  git commit -m "modification partage.md et ajout precision.md"
+  ```
   - _Push_
+
+  ```
+  git push
+  ```
+
   - Observer la *pull request* : que s'est-il passé ?
+
+  > le commit apparait dans le pull request  
+
   - Finalement, faire le _merge_ sur la page de la _pull request_
   - Noter que l'interface nous propose alors de supprimer la branche devenue inutile ; supprimer la branche
 
 - Dans un contexte de travail en collaboration sur un même dépôt, donner un _workflow_ (façon de travailler) possible qui va permettre à tous les intervenants de viser des ajouts à la branche d'intégration, d'en discuter, et ceci sans danger pour la branche d'intégration, avant que finalement l'intégrateur (probablement propriétaire du dépot) accepte les changements.
 
 - **_VALIDATION PROF07_**
+
+## Partie 5 - Travailler en collaboration avec GitHub
+
+Cette partie est plus intéressante avec un binôme, mais on peut également simuler les interactions sur un seul poste. On va simuler un travail collaboratif sur un même dépôt avec deux collaborateurs : Jean-Michel et Sylvie-Arnaude.
+
+### Mise en place
+
+- L'un joue Jean-Michel, l'autre Sylvie-Arnaude (si vous êtes seul, vous jouez les deux rôles)
+
+- _(pour binômes uniquement)_ Jean-Michel doit ajouter Sylvie-Arnaude en tant que collaboratrice de son dépôt de travail :
+
+  - se rendre dans les _settings_ du dépôt / _Manage Access_ / _Invite a collaborator_
+  - trouver et ajouter le compte de Sylvie-Arnaude
+  - à présent chacun peut _push_ des branches et des _commits_ sur le dépôt
+
+- Sylvie-Arnaude se place dans son répertoire de projets général (qui contient les répertoires de tous ses projets) et clone le dépôt de Jean-Michel (vous ajouterez en paramètre de la commande `clone` le nom du répertoire de destination : `tp-git-sa`)
+
+- Jean-Michel est censé déjà avoir le même projet en local, mais il va également cloner une nouvelle copie appelée `tp-git-jm` (attention de ne pas être dans le répertoire du dépôt existant au moment de taper la commande)
+
+### Travail collaboratif sur le même dépôt
+
+- Sylvie-Arnaude va effectuer quelques modifications sur sa copie du dépôt :
+
+  - Créer une branche (basée sur `master`) appelée `sa-modif` (bonne pratique : faire un `git status` pour vérifier que le dépôt est _clean_ et vérifier qu'on est sur la bonne branche de base avant de créer la nouvelle branche)
+  - Créer un fichier `sa-fichier1.md` avec du contenu
+  - Indexer et faire un _commit_ de cet ajout : `"premier commit de Sylvie-Arnaude"`
+
+- On va rendre ce travail local disponible sur le _remote_
+
+  - On sait qu'on a deux moyens principaux de faire ça :
+    1. Fusionner localement puis _push_
+    2. _Push_ directement puis créer une _Pull Request_
+  - On va utiliser la première option ici (on se rappelle que, si on travaille en équipe, on doit établir une convention commune pour ce genre de choix)
+    - Faire un _merge_ de `sa-modif` dans `master` (attention : pour une fusion, il faut être sûr d'être sur la branche `master` avant d'initier le _merge_)
+    - cela crée-t-il un nouveau _commit_ ou non et pourquoi ?
+    - Maintenant, on _push_ la branche `master`
+    - On peut finalement supprimer la branche `sa-modif`
+
+- À ce stade, Jean-Michel a son dépôt local qui est « un _commit_ en retard » par rapport au dépôt distant : il ne « voit » pas les modifications faites par Sylvie-Arnaude
+
+- Mais pour l'instant, Sylvie-Arnaude continue à travailler localement :
+
+  - elle liste les branches courantes (normalement une seule) en utilisant le paramètre `-vv` (_very verbose_) de la commande `git branch`
+  - elle crée une nouvelle branche `sa-fonctionnalite` basée sur `master` et _switch_ dessus
+  - elle modifie le fichier `sa-fichier1.md`
+  - elle indexe la modification et _commit_
+  - elle liste de nouveau les branches en _very verbose_ et note que la nouvelle branche ne possède pas d'équivalent sur le _remote_
+  - elle _push_ en créant la nouvelle branche sur le _remote_
+  - elle liste encore les branches et note le pointeur `origin/sa-fonctionnalite` qui a été créé ; il y a donc trois branches qui permettent de gérer `sa-fonctionnalite` :
+    - la branche locale `sa-fonctionnalite`
+    - la branche _ramote_ `sa-fonctionnalite`
+    - la branche de _tracking_ `origin/sa-fonctionnalite` qui permet à Git de relier les deux autres branches ; on ne peut pas manipuler directement cette branche, mais Git s'en sert pour la sunchronisation ; quand on _push_ depuis la branche `sa-fonctionnalite`, les trois branches pointent sur le même _commit_
+
+- À ce stade, Jean-Michel a deux _commits_ de retard en local (mais un seul par rapport à _master_) et ne connaît pas non plus la branche `sa-fonctionnalite`
+
+- Jean-Michel commence maintenant à travailler :
+
+  - il liste les branches en _very verbose_
+  - il crée une branche `jm-fonctionnalite` et s'y déplace
+  - il crée un nouveau fichier `jm-fichier1.md`
+  - il l'indexe et _commit_
+  - il liste les branches et note et note que la nouvelle branche n'a pas de branche de _tracking_ associée, et donc pas de _remote branch_
+  - il _push_ en créant la branche de _tracking_
+  - il liste de nouveau les branches et note que la _tracking branch_ existe
+
+- Combien y a-t-il de branches (en incluant les branches de _tracking_) sur le dépôt local de Jean-Michel ?
+
+- Combien y a-t-il de branches sur le *remote* ?
+
+- Les branches `jm-fonctionnalite`, `origin/jm-fonctionnalite` et la branche _remote_ `jm-fonctionnalite` pointent toutes vers le même *commit* : vrai ou faux ?
+
+- Le clone de Sylvie-Arnaude connaît-il la branche `jm-fonctionnalite` ?
+
+- Jean-Michel fait un _pull_ pour récupérer le travail de Sylvie-Arnaude
+
+- Sylvie-Arnaude fait de même pour récupérer le travail de Jean-Michel
+
+- Souvenez-vous que la commande _pull_ fait deux choses :
+
+  - récupérer (_fetch_) les nouveaux _commits_ et les nouvelles branches depuis le _remote_
+  - fusionner (_merge_) ces modifications localement : cela peut potentiellement provoquer des conflits, comme nous l'avons vu précédemment ; ceux-ci seront résolus manuellement de la même manière
+
+- Simulez du travail sur les deux clones dans le but de provoquer un conflit au moment du _pull_ chez Sylvie-Arnaude
+
+  - Résolvez les conflits localement
+  - Utilisez une _Pull Request_ pour proposer la résolution en _remote_
